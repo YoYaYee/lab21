@@ -5,7 +5,7 @@ int main(int argc, char* argv[]){
     float avg;
     float a[argc] = {};
     for(int i; i < argc; i++){
-        a[i] = atoi(argv[i]);
+        a[i] = atof(argv[i]);
     }
     for(int j; j < argc; j++){
         avg += a[j];
