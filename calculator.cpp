@@ -1,6 +1,5 @@
 #include <windows.h>
-#include <cstdio>
-#include <cstdlib>
+#include <stdio.h>
 
 HWND Textbox,button,Textbox1,Textbox2;
 char i[20],j[20],resultStr[50];;
@@ -24,6 +23,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 				case 2:
 				case 3:
 				case 4:
+				
 				float first,second,result;
 				GetWindowText(Textbox1, i, sizeof(i));
 				GetWindowText(Textbox2, j, sizeof(j));
