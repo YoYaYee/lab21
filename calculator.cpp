@@ -4,7 +4,6 @@
 HWND Textbox,button,Textbox1,Textbox2;
 char i[20],j[20],resultStr[50];;
 
-/* This is where all the input to the window goes to */
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
 	switch(Message) {
 		case WM_CREATE: {
@@ -42,7 +41,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 					}
 				result = first / second;
 				}
-				sprintf(resultStr, "%.2f", result);
+				sprintf(resultStr, "%f", result);
 				::MessageBox(hwnd,resultStr,"Result",MB_OK);
 				break;
 			}
@@ -58,24 +57,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 	return 0;
 }
 
-/* The 'main' function of Win32 GUI programs: this is where execution starts */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	WNDCLASSEX wc; /* A properties struct of our window */
-	HWND hwnd; /* A 'HANDLE', hence the H, or a pointer to our window */
-	MSG msg; /* A temporary location for all messages */
+	WNDCLASSEX wc;
+	HWND hwnd;
+	MSG msg;
 
-	/* zero out the struct and set the stuff we want to modify */
 	memset(&wc,0,sizeof(wc));
 	wc.cbSize	 = sizeof(WNDCLASSEX);
-	wc.lpfnWndProc	 = WndProc; /* This is where we will send messages to */
+	wc.lpfnWndProc	 = WndProc;
 	wc.hInstance	 = hInstance;
 	wc.hCursor	 = LoadCursor(NULL, IDC_ARROW);
 	
-	/* White, COLOR_WINDOW is just a #define for a system color, try Ctrl+Clicking it */
 	wc.hbrBackground = CreateSolidBrush(RGB(128, 0, 128));
 	wc.lpszClassName = "WindowClass";
-	wc.hIcon	 = LoadIcon(NULL, IDI_APPLICATION); /* Load a standard icon */
-	wc.hIconSm	 = LoadIcon(NULL, IDI_APPLICATION); /* use the name "A" to use the project icon */
+	wc.hIcon	 = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hIconSm	 = LoadIcon(NULL, IDI_APPLICATION);
 
 	if(!RegisterClassEx(&wc)) {
 		MessageBox(NULL, "Window Registration Failed!","Error!",MB_ICONEXCLAMATION|MB_OK);
@@ -87,10 +83,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		"WindowClass",
 		"My Calculator",
 		WS_VISIBLE|WS_SYSMENU,
-		640, /* x */
-		433, /* y */
-		250, /* width */
-		200, /* height */
+		640,
+		433,
+		250,
+		200,
 		NULL,NULL,hInstance,NULL);
 
 	if(hwnd == NULL) {
@@ -98,14 +94,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 0;
 	}
 
-	/*
-		This is the heart of our program where all input is processed and 
-		sent to WndProc. Note that GetMessage blocks code flow until it receives something, so
-		this loop will not produce unreasonably high CPU usage
-	*/
-	while(GetMessage(&msg, NULL, 0, 0) > 0) { /* If no error is received... */
-		TranslateMessage(&msg); /* Translate key codes to chars if present */
-		DispatchMessage(&msg); /* Send it to WndProc */
+	while(GetMessage(&msg, NULL, 0, 0) > 0) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 	return msg.wParam;
 }
